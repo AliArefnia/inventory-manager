@@ -12,7 +12,10 @@ import { usePaginatedProducts } from "../../hooks/useProducts";
 
 import { type Product } from "../../types/product";
 import { NUMBER_PER_PAGE } from "../../conts";
-import BaseButton from "../../components/baseButton";
+import LoadingSpinner from "../../components/loadingSpinner";
+import ErrorMessage from "../../components/errorMessages";
+import Pagination from "../../components/pagination";
+
 export default function ProductTable() {
   const [page, setPage] = useState(1);
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -164,33 +167,14 @@ export default function ProductTable() {
           )}
         </tbody>
       </table>
-      {!isLoading && !isError && (
-        <div className="flex items-center justify-between mt-6 text-sm text-gray-600">
-          <span>
-            Showing {(page - 1) * NUMBER_PER_PAGE + 1}–
-            {page * NUMBER_PER_PAGE < count! ? page * NUMBER_PER_PAGE : count}{" "}
-            of {count}
-          </span>
 
-          <div className="flex items-center gap-2">
-            <BaseButton
-              onClick={() => setPage(page - 1)}
-              disabled={page === 1}
-              variant="secondary"
-            >
-              Previous
-            </BaseButton>
-            <span>
-              Page {page} of {Math.ceil(count! / NUMBER_PER_PAGE)}
-            </span>
-            <BaseButton
-              onClick={() => setPage(page + 1)}
-              disabled={page === Math.ceil(count! / NUMBER_PER_PAGE)}
-            >
-              Next
-            </BaseButton>
-          </div>
-        </div>
+      {!isLoading && !isError && (
+        <Pagination
+          currentPage={page}
+          numberOfItems={NUMBER_PER_PAGE}
+          totalItems={count!}
+          changePage={setPage}
+        ></Pagination>
       )}
     </div>
   );
