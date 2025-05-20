@@ -9,9 +9,16 @@ import {
 } from "@tanstack/react-table";
 import { usePaginatedProducts } from "../../hooks/useProducts";
 import { type Product } from "../../types/product";
+import { NUMBER_PER_PAGE } from "../../conts";
 import BaseButton from "../../components/baseButton";
 export default function ProductTable() {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const {
+    data: { data: products, count } = { data: [], count: 0 },
+    isLoading,
+    isError,
+    error,
+  } = usePaginatedProducts(page, searchTerm);
 
   const columns = useMemo<ColumnDef<Product>[]>(
     () => [
