@@ -136,11 +136,9 @@ export default function ProductTable() {
             <tr>
               <td colSpan={table.getAllColumns().length}>
                 <div className="flex justify-center py-10">
-                  <LoadingSpinner
-                    size={40}
-                    color={"red"}
-                    text={"Searching for the peoducts..."}
-                  />
+                  <LoadingSpinner size={40} color={"red"}>
+                    Searching for the peoducts...
+                  </LoadingSpinner>
                 </div>
               </td>
             </tr>
@@ -154,6 +152,15 @@ export default function ProductTable() {
                 ))}
               </tr>
             ))
+          )}
+          {isError && (
+            <tr>
+              <td colSpan={table.getAllColumns().length}>
+                <div className="flex justify-center py-10">
+                  <ErrorMessage>{(error as Error).message}</ErrorMessage>
+                </div>
+              </td>
+            </tr>
           )}
         </tbody>
       </table>
