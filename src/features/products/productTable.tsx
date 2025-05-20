@@ -7,13 +7,17 @@ import {
   type ColumnDef,
   type SortingState,
 } from "@tanstack/react-table";
+
 import { usePaginatedProducts } from "../../hooks/useProducts";
+
 import { type Product } from "../../types/product";
 import { NUMBER_PER_PAGE } from "../../conts";
 import BaseButton from "../../components/baseButton";
 export default function ProductTable() {
   const [page, setPage] = useState(1);
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const {
     data: { data: products, count } = { data: [], count: 0 },
     isLoading,
@@ -82,6 +86,13 @@ export default function ProductTable() {
 
   return (
     <div className="overflow-x-auto">
+      <input
+        type="text"
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="mb-4 px-4 py-2 border rounded"
+      />
       <table className="min-w-full bg-white shadow-md rounded-lg">
         <thead className="bg-gray-100">
           {table.getHeaderGroups().map((headerGroup) => (
