@@ -10,8 +10,19 @@ export const useProducts = () => {
       const { data, error } = await supabase.from("Products").select("*");
 
       console.log(data);
+export const useProductCount = () => {
+  return useQuery({
+    queryKey: ["productCount"],
+    queryFn: async () => {
+      const { count, error } = await supabase
+        .from("products")
+        .select("*", { count: "exact", head: true });
+
       if (error) throw new Error(error.message);
-      return data as [Product];
+      return count ?? 0;
+    },
+  });
+};
     },
   });
 };
