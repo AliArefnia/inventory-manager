@@ -73,6 +73,44 @@ export const useProductCategories = () => {
     },
   });
 };
+
+export const usePaginatedProductCategory = (
+  categoryName: string,
+  page: number,
+  searchTerm: string
+) => {
+  const debouncedSearch = useDebounce(searchTerm);
+
+  return useQuery({
+    queryKey: ["category", page, debouncedSearch],
+
+    queryFn: async () => {
+      const from = (page - 1) * NUMBER_PER_PAGE;
+      const to = from + NUMBER_PER_PAGE - 1;
+
+      let query = supabase
+        .from("products")
+        .select("*", { count: "exact" })
+        .eq("category", `${categoryName}`)
+        .range(from, to);
+
+      if (debouncedSearch.length >= 2) {
+        query = query.or(
+          `name.ilike.%${debouncedSearch}%,sku.ilike.%${debouncedSearch}%,category.ilike.%${debouncedSearch}%`
+        );
+      }
+
+      const { data, error, count } = await query;
+
+      if (error) throw new Error(error.message);
+
+      return {
+        data: data.map(({ id, ...product }) => ({
+          ...product,
+          productId: id,
+        })) as Product[],
+        count,
+      };
     },
   });
 };
