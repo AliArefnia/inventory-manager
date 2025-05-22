@@ -3,11 +3,20 @@ import { supabase } from "../lib/supabase";
 
 import type { Product } from "../types/product";
 
+import { NUMBER_PER_PAGE } from "../conts";
+import { useDebounce } from "./useDebounce";
+
 export const useProducts = () => {
   return useQuery({
     queryKey: ["product"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("Products").select("*");
+      const { data, error } = await supabase.from("products").select("*");
+      if (error) throw new Error(error.message);
+      return data as [Product];
+    },
+  });
+};
+
 export const usePaginatedProducts = (page: number, searchTerm: string) => {
   const debouncedSearch = useDebounce(searchTerm);
 
@@ -44,7 +53,6 @@ export const usePaginatedProducts = (page: number, searchTerm: string) => {
   });
 };
 
-      console.log(data);
 export const useProductCount = () => {
   return useQuery({
     queryKey: ["productCount"],
