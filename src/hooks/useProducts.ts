@@ -58,6 +58,21 @@ export const useProductCount = () => {
     },
   });
 };
+export const useProductCategories = () => {
+  return useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("products")
+        .select("category");
+
+      if (error) throw new Error(error.message);
+
+      console.log(data);
+      return data;
+    },
+  });
+};
     },
   });
 };
