@@ -1,33 +1,30 @@
-import { useMemo, useState } from "react";
 import {
-  useReactTable,
+  flexRender,
   getCoreRowModel,
   getSortedRowModel,
-  flexRender,
+  useReactTable,
   type ColumnDef,
   type SortingState,
 } from "@tanstack/react-table";
+import { useMemo, useState } from "react";
+import { type Product } from "../types/product";
+import LoadingSpinner from "./LoadingSpinner";
+import ErrorContainer from "./ErrorContainer";
 
-import { usePaginatedProducts } from "../../hooks/useProducts";
+type ProductTablesProps = {
+  products: Product[];
+  isLoading: boolean;
+  isError: boolean;
+  error: Error | null;
+};
 
-import { type Product } from "../../types/product";
-import { NUMBER_PER_PAGE } from "../../conts";
-import LoadingSpinner from "../../components/loadingSpinner";
-import ErrorMessage from "../../components/errorMessages";
-import Pagination from "../../components/pagination";
-
-export default function ProductTable() {
-  const [page, setPage] = useState(1);
+function ProductTable({
+  products,
+  isLoading,
+  isError,
+  error,
+}: ProductTablesProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const {
-    data: { data: products, count } = { data: [], count: 0 },
-    isLoading,
-    isError,
-    error,
-  } = usePaginatedProducts(page, searchTerm);
-
   const columns = useMemo<ColumnDef<Product>[]>(
     () => [
       {
@@ -86,16 +83,8 @@ export default function ProductTable() {
     enableColumnResizing: true,
     columnResizeMode: "onChange",
   });
-
   return (
-    <div className="overflow-x-auto">
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="mb-4 px-4 py-2 border rounded"
-      />
+    <div>
       <table className="min-w-full bg-white shadow-md rounded-lg">
         <thead className="bg-gray-100">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -160,22 +149,15 @@ export default function ProductTable() {
             <tr>
               <td colSpan={table.getAllColumns().length}>
                 <div className="flex justify-center py-10">
-                  <ErrorMessage>{(error as Error).message}</ErrorMessage>
+                  <ErrorContainer>{(error as Error).message}</ErrorContainer>
                 </div>
               </td>
             </tr>
           )}
         </tbody>
       </table>
-
-      {!isLoading && !isError && (
-        <Pagination
-          currentPage={page}
-          numberOfItems={NUMBER_PER_PAGE}
-          totalItems={count!}
-          changePage={setPage}
-        ></Pagination>
-      )}
     </div>
   );
 }
+
+export default ProductTable;
