@@ -8,31 +8,41 @@ function dashboard() {
         <nav className="space-y-4 flex flex-col items-center">
           <NavLink
             to="/"
-            className={({ isActive }) => (isActive ? "font-bold" : "")}
+            className={({ isActive }) =>
+              isActive ? "font-bold" : "font-display"
+            }
           >
             Dashboard
           </NavLink>
           <NavLink
             to="/products"
-            className={({ isActive }) => (isActive ? "font-bold" : "")}
+            className={({ isActive }) =>
+              isActive ? "font-bold" : "font-display"
+            }
           >
             Products
           </NavLink>
           <NavLink
-            to="/settings"
-            className={({ isActive }) => (isActive ? "font-bold" : "")}
+            to="/categories"
+            className={({ isActive }) =>
+              isActive ? "font-bold" : "font-display"
+            }
           >
-            Settings
+            categories
           </NavLink>
           <NavLink
             to="/products"
-            className={({ isActive }) => (isActive ? "font-bold" : "")}
+            className={({ isActive }) =>
+              isActive ? "font-bold" : "font-display"
+            }
           >
             Products
           </NavLink>
           <NavLink
             to="/products"
-            className={({ isActive }) => (isActive ? "font-bold" : "")}
+            className={({ isActive }) =>
+              isActive ? "font-bold" : "font-display"
+            }
           >
             Products
           </NavLink>
