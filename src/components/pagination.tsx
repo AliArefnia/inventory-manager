@@ -1,4 +1,4 @@
-import BaseButton from "./baseButton";
+import BaseButton from "./BaseButton";
 
 type PaginationProps = {
   currentPage: number;
@@ -7,7 +7,7 @@ type PaginationProps = {
   changePage: (currentPage: number) => void;
 };
 
-export default function pagination({
+export default function Pagination({
   currentPage,
   numberOfItems,
   totalItems,
