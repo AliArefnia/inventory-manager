@@ -66,6 +66,24 @@ export const useProductCount = () => {
     },
   });
 };
+
+export const useProductById = (id: string) => {
+  return useQuery({
+    queryKey: ["product", id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (error) throw new Error(error.message);
+      const { id: productId, ...rest } = data;
+      return { productId, ...rest } as Product;
+    },
+  });
+};
+
 export const useProductCategories = () => {
   return useQuery({
     queryKey: ["categories"],
