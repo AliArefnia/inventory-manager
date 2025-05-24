@@ -50,7 +50,9 @@ export default function ProductId() {
                   setShowEditForm(false);
                 },
                 onError: (err: Error) => {
-                  toast.error("Update failed: " + err.message);
+                  toast.error(
+                    "Update failed: " + err.message + "/n" + "try again!"
+                  );
                 },
               }
             );
