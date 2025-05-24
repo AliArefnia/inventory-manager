@@ -1,52 +1,29 @@
 import { Outlet, NavLink } from "react-router-dom";
+  const navItems = [
+    { to: "/", label: "Dashboard" },
+    { to: "/products", label: "Products" },
+    { to: "/categories", label: "Categories" },
+  ];
 
-function dashboard() {
   return (
-    <div className="min-h-screen flex">
-      <aside className="w-64 bg-gray-900 text-white p-6 hidden md:block">
-        <h1 className="text-2xl font-bold mb-6 text-center">Inventory App</h1>
-        <nav className="space-y-4 flex flex-col items-center">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              isActive ? "font-bold" : "font-display"
-            }
-          >
-            Dashboard
-          </NavLink>
-          <NavLink
-            to="/products"
-            className={({ isActive }) =>
-              isActive ? "font-bold" : "font-display"
-            }
-          >
-            Products
-          </NavLink>
-          <NavLink
-            to="/categories"
-            className={({ isActive }) =>
-              isActive ? "font-bold" : "font-display"
-            }
-          >
-            categories
-          </NavLink>
-          <NavLink
-            to="/products"
-            className={({ isActive }) =>
-              isActive ? "font-bold" : "font-display"
-            }
-          >
-            Products
-          </NavLink>
-          <NavLink
-            to="/products"
-            className={({ isActive }) =>
-              isActive ? "font-bold" : "font-display"
-            }
-          >
-            Products
-          </NavLink>
-        </nav>
+          <nav className="space-y-2">
+            {navItems.map(({ to, label }) => (
+              <NavLink
+                key={to}
+                to={to}
+                onClick={() => setSidebarOpen(false)}
+                className={({ isActive }) =>
+                  `block px-4 py-2 rounded-lg transition-colors ${
+                    isActive
+                      ? "bg-gray-200 text-gray-900 font-semibold"
+                      : "text-gray-600 hover:bg-gray-100"
+                  }`
+                }
+              >
+                {label}
+              </NavLink>
+            ))}
+          </nav>
       </aside>
       <div className="flex-1 bg-gray-100">
         <header className="bg-white shadow p-4 flex justify-between items-center">
@@ -64,4 +41,4 @@ function dashboard() {
   );
 }
 
-export default dashboard;
+export default Dashboard;
