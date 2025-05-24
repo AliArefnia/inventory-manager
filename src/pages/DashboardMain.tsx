@@ -28,7 +28,11 @@ function Dashboard() {
               <NavLink
                 key={to}
                 to={to}
-                onClick={() => setSidebarOpen(false)}
+                onClick={() => {
+                  if (window.innerWidth < 768) {
+                    setSidebarOpen(false);
+                  }
+                }}
                 className={({ isActive }) =>
                   `block px-4 py-2 rounded-lg transition-colors ${
                     isActive
