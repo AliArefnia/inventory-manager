@@ -7,9 +7,13 @@ import {
   type SortingState,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { type Product } from "../types/product";
+
 import LoadingSpinner from "./LoadingSpinner";
 import ErrorContainer from "./ErrorContainer";
+import BaseButton from "./BaseButton";
 
 type ProductTablesProps = {
   products: Product[];
@@ -25,6 +29,8 @@ function ProductTable({
   error,
 }: ProductTablesProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
+
+  const navigate = useNavigate();
   const columns = useMemo<ColumnDef<Product>[]>(
     () => [
       {
@@ -56,14 +62,16 @@ function ProductTable({
         id: "actions",
         header: "Actions",
         cell: ({ row }) => (
-          <div className="space-x-2">
-            <a
-              href={`/products/${row.original.productId}`}
-              className="text-blue-600 hover:underline"
+          <div className="space-x-2 ">
+            <BaseButton
+              className="text-blue-700 "
+              onClick={() => {
+                navigate(`${row.original.productId}`);
+              }}
             >
               View
-            </a>
-            <button className="text-red-600 hover:underline">Delete</button>
+            </BaseButton>
+            <BaseButton className="text-red-700">Delete</BaseButton>
           </div>
         ),
       },
