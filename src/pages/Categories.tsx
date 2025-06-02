@@ -1,6 +1,8 @@
 import { useProductCategories } from "../hooks/useProducts";
 import BaseCategoryCard from "../components/BaseCategoryCard";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner";
+import ErrorContainer from "../components/ErrorContainer";
 
 function Categories() {
   const { data, isLoading, isError, error, refetch } = useProductCategories();
@@ -21,24 +23,31 @@ function Categories() {
   });
 
   return (
-    <div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {separatedCatList.map((cat) => (
-          <BaseCategoryCard
-            onClick={() => {
-              console.log("clicked");
-              navigate(`${cat.catName}`);
-            }}
-            catName={cat.catName}
-            catNumber={cat.number}
-            isLoading={isLoading}
-            isError={isError}
-            error={error}
-            onRetry={refetch}
-            key={cat.catName}
-          ></BaseCategoryCard>
-        ))}
-      </div>
+    <div className="flex justify-center">
+      {isLoading ? (
+        <LoadingSpinner>Getting Categories List ...</LoadingSpinner>
+      ) : isError ? (
+        <ErrorContainer className="w-1/2 ">
+          Failed to fetch Categories!
+        </ErrorContainer>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full px-8">
+          {separatedCatList.map((cat) => (
+            <BaseCategoryCard
+              onClick={() => {
+                navigate(`${cat.catName}`);
+              }}
+              catName={cat.catName}
+              catNumber={cat.number}
+              isLoading={isLoading}
+              isError={isError}
+              error={error}
+              onRetry={refetch}
+              key={cat.catName}
+            ></BaseCategoryCard>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
