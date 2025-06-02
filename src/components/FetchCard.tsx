@@ -19,7 +19,7 @@ function FetchCard({
     <div className="bg-white p-6 rounded-lg shadow">
       <h3 className="text-lg font-sans">{title}</h3>
       {isLoading ? (
-        <LoadingSpinner color="red" />
+        <LoadingSpinner />
       ) : isError ? (
         <div className="text-red-500 text-sm">
           Error loading.
