@@ -14,7 +14,7 @@ export default function BaseButton({
   className = "",
 }: BaseButtonProps) {
   const baseStyle =
-    "px-4 py-2 rounded transition-colors duration-200 font-medium cursor-pointer  ";
+    "px-4 py-2 rounded transition-all duration-200 font-medium cursor-pointer rounded-lg ";
   const variants = {
     primary: `bg-blue-600 text-white hover:bg-blue-700 disabled:bg-blue-300`,
     secondary: `bg-gray-200 text-gray-800 hover:bg-gray-300 disabled:bg-gray-100`,
