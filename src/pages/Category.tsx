@@ -30,7 +30,9 @@ function Category() {
         className="mb-4 px-4 py-2 border rounded"
       />
       <ProductTable
+        key={categoryName}
         products={products!}
+        count={count!}
         isLoading={isLoading}
         isError={isError}
         error={error}
