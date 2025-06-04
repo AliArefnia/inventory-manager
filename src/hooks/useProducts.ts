@@ -106,7 +106,7 @@ export const usePaginatedProductCategory = (
   const debouncedSearch = useDebounce(searchTerm);
 
   return useQuery({
-    queryKey: ["category", page, debouncedSearch],
+    queryKey: ["category", categoryName, page, debouncedSearch],
 
     queryFn: async () => {
       const from = (page - 1) * NUMBER_PER_PAGE;
