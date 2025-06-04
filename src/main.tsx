@@ -33,7 +33,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="products" element={<ProductsAll />} />
-            <Route path="/products/new" element={<ProductNew />} />
+            <Route path="newProduct" element={<ProductNew />} />
             <Route path="products/:productId" element={<ProductId />} />
             <Route path="categories" element={<Categories />} />
             <Route path="categories/:categoryName" element={<Category />} />
