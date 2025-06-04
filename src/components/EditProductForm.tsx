@@ -37,15 +37,46 @@ export default function EditProductForm({
       </div>
 
       <div>
+        <label className="block text-sm font-medium text-gray-600">SKU</label>
+        <input
+          type="text"
+          {...register("sku")}
+          className="mt-1 w-full border border-gray-300 rounded px-3 py-2"
+        />
+        {errors.sku && (
+          <p className="text-red-500 text-sm">{errors.sku.message}</p>
+        )}
+      </div>
+      <div>
         <label className="block text-sm font-medium text-gray-600">Price</label>
         <input
           type="number"
           step="0.1"
-          {...register("price", { required: "Price is required" })}
+          {...register("price", {
+            required: "Price is required",
+            valueAsNumber: true,
+            min: {
+              value: 0.1,
+              message: "Price must be a positive number",
+            },
+          })}
           className="mt-1 w-full border border-gray-300 rounded px-3 py-2"
         />
         {errors.price && (
           <p className="text-red-500 text-sm">{errors.price.message}</p>
+        )}
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-600">
+          Category
+        </label>
+        <input
+          type="text"
+          {...register("category")}
+          className="mt-1 w-full border border-gray-300 rounded px-3 py-2"
+        />
+        {errors.category && (
+          <p className="text-red-500 text-sm">{errors.category.message}</p>
         )}
       </div>
 
@@ -55,7 +86,14 @@ export default function EditProductForm({
         </label>
         <input
           type="number"
-          {...register("quantity", { required: "Quantity is required" })}
+          {...register("quantity", {
+            required: "Quantity is required",
+            valueAsNumber: true,
+            min: {
+              value: 1,
+              message: "Quantity must be at least 1",
+            },
+          })}
           className="mt-1 w-full border border-gray-300 rounded px-3 py-2"
         />
         {errors.quantity && (
