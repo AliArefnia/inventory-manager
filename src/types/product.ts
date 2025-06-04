@@ -8,3 +8,11 @@ export type Product = {
   created_at?: string;
   updated_at?: string;
 };
+
+export type ProductFormValues = {
+  name: string;
+  sku: string;
+  category: string;
+  quantity: number;
+  price: number;
+};

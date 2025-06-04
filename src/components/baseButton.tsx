@@ -4,6 +4,7 @@ type BaseButtonProps = {
   disabled?: boolean;
   variant?: "primary" | "secondary" | "borderBlue" | "borderRed";
   className?: string;
+  type?: "submit" | "reset" | "button" | undefined;
 };
 
 export default function BaseButton({
@@ -12,6 +13,7 @@ export default function BaseButton({
   disabled = false,
   variant,
   className = "",
+  type,
 }: BaseButtonProps) {
   const baseStyle =
     "px-4 py-2 rounded transition-all duration-200 font-medium cursor-pointer rounded-lg ";
@@ -24,6 +26,7 @@ export default function BaseButton({
 
   return (
     <button
+      type={type}
       onClick={onClick}
       disabled={disabled}
       className={`${baseStyle} ${variant && variants[variant]} ${className}`}
