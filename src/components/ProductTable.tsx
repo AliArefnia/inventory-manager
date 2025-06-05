@@ -14,6 +14,8 @@ import { type Product } from "../types/product";
 import LoadingSpinner from "./LoadingSpinner";
 import ErrorContainer from "./ErrorContainer";
 import BaseButton from "./BaseButton";
+import BaseYesNoModule from "./BaseYesNoModule";
+import { useDeleteProduct } from "../hooks/useDeleteProduct";
 
 type ProductTablesProps = {
   products: Product[];
@@ -31,6 +33,9 @@ function ProductTable({
   count,
 }: ProductTablesProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [showDeleteModule, setShowDeleteModule] = useState(false);
+  const { mutate: deleteProduct, isPending: isDeleting } = useDeleteProduct();
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const navigate = useNavigate();
   const columns = useMemo<ColumnDef<Product>[]>(
@@ -81,7 +86,15 @@ function ProductTable({
             >
               View
             </BaseButton>
-            <BaseButton className="!text-red-700">Delete</BaseButton>
+            <BaseButton
+              className="!text-red-700"
+              onClick={() => {
+                setSelectedId(row.original.productId);
+                setShowDeleteModule(true);
+              }}
+            >
+              Delete
+            </BaseButton>
           </div>
         ),
       },
@@ -146,7 +159,7 @@ function ProductTable({
             <tr>
               <td colSpan={table.getAllColumns().length}>
                 <div className="flex justify-center py-10">
-                  <LoadingSpinner size={40} color="black">
+                  <LoadingSpinner size={40}>
                     Searching for the peoducts...
                   </LoadingSpinner>
                 </div>
@@ -188,6 +201,24 @@ function ProductTable({
           )}
         </tbody>
       </table>
+
+      <BaseYesNoModule
+        isOpen={showDeleteModule}
+        onClose={() => setShowDeleteModule(false)}
+        disabled={isDeleting}
+        handleYes={() => {
+          deleteProduct(selectedId!, {
+            onSuccess: () => {
+              setShowDeleteModule(false);
+            },
+          });
+          setSelectedId(null);
+        }}
+      >
+        <h2 className="text-lg text-neutral-800 dark:text-white mb-4 text-center">
+          Are you sure you want to delete this product?
+        </h2>
+      </BaseYesNoModule>
     </div>
   );
 }
