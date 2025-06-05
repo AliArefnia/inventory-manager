@@ -11,8 +11,8 @@ export default function BaseModal({ isOpen, onClose, children }: ModalProps) {
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6 relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 ">
+      <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-lg w-full max-w-lg p-6 pt-12  relative">
         <button
           onClick={onClose}
           className="absolute top-3 right-3 text-gray-500 hover:text-gray-900 text-2xl cursor-pointer"
