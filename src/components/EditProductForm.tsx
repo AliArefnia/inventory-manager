@@ -104,9 +104,13 @@ export default function EditProductForm({
       <div className="text-right">
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-cyan-700 text-white px-4 py-2 rounded hover:bg-cyan-900 w-1/2 md:w-1/3"
         >
-          {isUpdating ? <LoadingSpinner></LoadingSpinner> : "Save Changes"}
+          {isUpdating ? (
+            <LoadingSpinner size={24}></LoadingSpinner>
+          ) : (
+            "Save Changes"
+          )}
         </button>
       </div>
     </form>
