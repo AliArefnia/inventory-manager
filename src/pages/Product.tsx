@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -8,6 +8,10 @@ import { useUpdateProduct } from "../hooks/useUpdateProduct";
 import Modal from "../components/BaseModal";
 import EditProductForm from "../components/EditProductForm";
 import LoadingSpinner from "../components/LoadingSpinner";
+import BaseButton from "../components/BaseButton";
+
+import { useDeleteProduct } from "../hooks/useDeleteProduct";
+import BaseYesNoModule from "../components/BaseYesNoModule";
 // type StockLog = {
 //   id: string;
 //   change: number;
@@ -18,7 +22,10 @@ import LoadingSpinner from "../components/LoadingSpinner";
 export default function ProductId() {
   const { productId } = useParams<{ productId: string }>();
   const [showEditForm, setShowEditForm] = useState(false);
+  const [showDeleteModule, setShowDeleteModule] = useState(false);
   const { mutate: updateProduct, isPending: isUpdating } = useUpdateProduct();
+  const { mutate: deleteProduct, isPending: isDeleting } = useDeleteProduct();
+  const navigate = useNavigate();
 
   const {
     data: product,
@@ -71,21 +78,41 @@ export default function ProductId() {
         />
       </Modal>
 
+      <BaseYesNoModule
+        isOpen={showDeleteModule}
+        onClose={() => setShowDeleteModule(false)}
+        disabled={isDeleting}
+        handleYes={() => {
+          deleteProduct(productId!);
+          navigate(`/products`);
+        }}
+      >
+        <h2 className="text-lg font-semibold text-neutral-800 dark:text-white  mb-4 text-center">
+          Are you sure you want to delete this product?
+        </h2>
+      </BaseYesNoModule>
+
       {/* Header Controls */}
       <div className="flex justify-between items-center mb-8">
-        <button className="text-sm text-blue-600 hover:underline">
-          ← Back
+        <button className="text-sm dark:text-neutral-400 hover:cursor-pointer border-black border-2 dark:border-neutral-400 rounded-2xl px-4 py-2 hover:scale-105 transition-all">
+          <span className="">←</span> Back
         </button>
+
+        {/* Edit Button */}
         <div className="space-x-3">
-          <button
+          <BaseButton
             onClick={() => setShowEditForm((prev) => !prev)}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            className="bg-cyan-700 text-white px-4 py-2 rounded hover:bg-cyan-900"
           >
             Edit
-          </button>
-          <button className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+          </BaseButton>
+          {/* delete Button */}
+          <BaseButton
+            onClick={() => setShowDeleteModule((prev) => !prev)}
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-900"
+          >
             Delete
-          </button>
+          </BaseButton>
         </div>
       </div>
       {/* Product Header */}
@@ -98,7 +125,9 @@ export default function ProductId() {
             className="w-24 h-24 rounded border object-cover"
           /> */}
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">{product.name}</h1>
+            <h1 className="text-3xl font-bold dark:text-neutral-200">
+              {product.name}
+            </h1>
             <span
               className={`text-sm mt-1 inline-block px-3 py-1 rounded-full font-medium ${
                 product.quantity > 0
@@ -113,7 +142,7 @@ export default function ProductId() {
       </div>
 
       {/* Product Card Detail */}
-      <div className="bg-white shadow-xl rounded-xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="bg-white dark:bg-neutral-800 shadow-xl dark:shadow-neutral-700 dark:shadow-lg rounded-xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
         <Detail label="SKU" value={product.sku} />
         <Detail label="Category" value={product.category || "-"} />
         <Detail label="Price" value={`$${product.price.toFixed(2)}`} />
@@ -165,8 +194,10 @@ export default function ProductId() {
 function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="text-sm text-gray-500 mb-1">{label}</p>
-      <p className="text-lg font-semibold text-gray-800 break-words">{value}</p>
+      <p className="text-sm  text-gray-500 mb-1">{label}</p>
+      <p className="text-lg  dark:text-neutral-200 text-gray-800 break-words">
+        {value}
+      </p>
     </div>
   );
 }
