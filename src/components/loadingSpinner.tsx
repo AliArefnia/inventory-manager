@@ -6,17 +6,28 @@ type SpinnerProps = {
 
 export default function LoadingSpinner({
   size = 40,
-  color = "black",
+  color = "gray",
   children,
 }: SpinnerProps) {
   return (
-    <div className="flex flex-col justify-center">
-      <div
-        className="animate-spin rounded-2xl border-4 my-2 border-t-transparent self-center"
-        style={{ width: size, height: size, borderColor: color }}
-      />
+    <div className="flex flex-col justify-center items-center space-y-4">
+      <div className="relative" style={{ width: size, height: size }}>
+        <div
+          className="absolute inset-0 rounded-full border-4 border-t-transparent animate-spin"
+          style={{
+            borderColor: `${color}33`,
+            borderTopColor: color,
+          }}
+        />
+        <div
+          className="absolute inset-0 rounded-full blur-[3px] opacity-40"
+          style={{
+            backgroundColor: color,
+          }}
+        />
+      </div>
       {children && (
-        <p style={{ color: color }} className="mt-4 text-center">
+        <p style={{ color: color }} className="text-sm text-center font-medium">
           {children}
         </p>
       )}
