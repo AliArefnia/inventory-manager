@@ -1,4 +1,4 @@
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import useDarkMode from "../hooks/useDarkMode";
@@ -8,7 +8,7 @@ function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const navItems = [
-    { to: "/", label: "Dashboard" },
+    { to: "/dashboard", label: "Dashboard" },
     { to: "/products", label: "Products" },
     { to: "/categories", label: "Categories" },
     { to: "/newProduct", label: "New Product" },
@@ -16,6 +16,12 @@ function Dashboard() {
   const [isDark, setIsDark] = useDarkMode();
 
   const isLoggedIn = true;
+  const location = useLocation();
+  const activeNavItem = navItems.find((item) =>
+    location.pathname.startsWith(item.to)
+  );
+  console.log(activeNavItem);
+  const currentTitle = activeNavItem?.label || "Dashboard";
 
   return (
     <div className="h-screen flex bg-gray-50 relative overflow-hidden dark:bg-black ">
@@ -83,7 +89,7 @@ function Dashboard() {
               )}
             </BaseButton>
             <h2 className="text-xl text-gray-800 dark:text-gray-200">
-              Dashboard
+              {currentTitle}
             </h2>
           </div>
           <div className="flex items-center gap-4">
