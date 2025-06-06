@@ -2,6 +2,7 @@
 import { useForm } from "react-hook-form";
 import { type Product } from "../types/product";
 import LoadingSpinner from "./LoadingSpinner";
+import BaseButton from "./BaseButton";
 
 type EditProductFormProps = {
   product: Product;
@@ -22,14 +23,18 @@ export default function EditProductForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <h2 className="text-xl font-semibold text-gray-700">Edit Product</h2>
+      <h2 className="text-xl font-semibold dark:text-neutral-300 ">
+        Edit Product
+      </h2>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600">Name</label>
+        <label className="block text-sm font-medium text-gray-600 dark:text-neutral-500">
+          Name
+        </label>
         <input
           type="text"
           {...register("name", { required: "Name is required" })}
-          className="mt-1 w-full border border-gray-300 rounded px-3 py-2"
+          className="mt-1 w-full border border-gray-300 rounded px-3 py-2 dark:text-neutral-100"
         />
         {errors.name && (
           <p className="text-red-500 text-sm">{errors.name.message}</p>
@@ -37,18 +42,22 @@ export default function EditProductForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600">SKU</label>
+        <label className="block text-sm font-medium text-gray-600 dark:text-neutral-500">
+          SKU
+        </label>
         <input
           type="text"
           {...register("sku")}
-          className="mt-1 w-full border border-gray-300 rounded px-3 py-2"
+          className="mt-1 w-full border border-gray-300 rounded px-3 py-2 dark:text-neutral-100"
         />
         {errors.sku && (
           <p className="text-red-500 text-sm">{errors.sku.message}</p>
         )}
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-600">Price</label>
+        <label className="block text-sm font-medium text-gray-600 dark:text-neutral-500">
+          Price
+        </label>
         <input
           type="number"
           step="0.1"
@@ -60,20 +69,20 @@ export default function EditProductForm({
               message: "Price must be a positive number",
             },
           })}
-          className="mt-1 w-full border border-gray-300 rounded px-3 py-2"
+          className="mt-1 w-full border border-gray-300 rounded px-3 py-2 dark:text-neutral-100"
         />
         {errors.price && (
           <p className="text-red-500 text-sm">{errors.price.message}</p>
         )}
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-600">
+        <label className="block text-sm font-medium text-gray-600 dark:text-neutral-500">
           Category
         </label>
         <input
           type="text"
           {...register("category")}
-          className="mt-1 w-full border border-gray-300 rounded px-3 py-2"
+          className="mt-1 w-full border border-gray-300 rounded px-3 py-2 dark:text-neutral-100"
         />
         {errors.category && (
           <p className="text-red-500 text-sm">{errors.category.message}</p>
@@ -81,7 +90,7 @@ export default function EditProductForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600">
+        <label className="block text-sm font-medium text-gray-600 dark:text-neutral-500">
           Quantity
         </label>
         <input
@@ -94,7 +103,7 @@ export default function EditProductForm({
               message: "Quantity must be at least 1",
             },
           })}
-          className="mt-1 w-full border border-gray-300 rounded px-3 py-2"
+          className="mt-1 w-full border border-gray-300 rounded px-3 py-2 dark:text-neutral-100"
         />
         {errors.quantity && (
           <p className="text-red-500 text-sm">{errors.quantity.message}</p>
@@ -102,16 +111,16 @@ export default function EditProductForm({
       </div>
 
       <div className="text-right">
-        <button
+        <BaseButton
           type="submit"
-          className="bg-cyan-700 text-white px-4 py-2 rounded hover:bg-cyan-900 w-1/2 md:w-1/3"
+          className="bg-cyan-700 text-white px-4 py-2  rounded hover:bg-cyan-900 w-1/2 md:w-1/3"
         >
           {isUpdating ? (
             <LoadingSpinner size={24}></LoadingSpinner>
           ) : (
             "Save Changes"
           )}
-        </button>
+        </BaseButton>
       </div>
     </form>
   );
