@@ -1,6 +1,6 @@
 import { usePaginatedProducts } from "../hooks/useProducts";
 
-import { NUMBER_PER_PAGE } from "../conts";
+import { NUMBER_PER_PAGE } from "../const";
 
 import Pagination from "../components/Pagination";
 import { useState } from "react";
