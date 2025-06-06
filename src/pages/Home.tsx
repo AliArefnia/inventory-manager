@@ -22,6 +22,14 @@ export default function DashboardHome() {
     isLoading: lowStockCountIsLoading,
     refetch: lowStockCountRefetch,
   } = useLowStockProductCount();
+  const {
+    data: CategoriesCount,
+    error: CategoriesCountError,
+    isError: CategoriesCountIsError,
+    isLoading: CategoriesCountIsLoading,
+    refetch: CategoriesCountRefetch,
+  } = useProductCategoriesCount();
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       <FetchCard
@@ -40,6 +48,13 @@ export default function DashboardHome() {
         error={lowStockCountError}
         onRetry={lowStockCountRefetch}
       ></FetchCard>
+      <FetchCard
+        title={"Number of Categories"}
+        value={CategoriesCount}
+        isLoading={CategoriesCountIsLoading}
+        isError={CategoriesCountIsError}
+        error={CategoriesCountError}
+        onRetry={CategoriesCountRefetch}
       ></FetchCard>
 
       <BaseCard title={"Recent Activity"}>
