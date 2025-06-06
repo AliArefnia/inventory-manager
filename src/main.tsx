@@ -20,20 +20,20 @@ import ProductId from "./pages/Product";
 import Home from "./pages/Home";
 import Categories from "./pages/Categories";
 import Category from "./pages/Category";
+import LowStockProducts from "./pages/LowStockProducts";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
-          {/* <Route path="/" element={<Home />} /> */}
-
           <Route path="/" element={<DashboardMain />}>
             <Route path="/dashboard" index element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="products" element={<ProductsAll />} />
             <Route path="newProduct" element={<ProductNew />} />
+            <Route path="lowStockProducts" element={<LowStockProducts />} />
             <Route path="products/:productId" element={<ProductId />} />
             <Route path="categories" element={<Categories />} />
             <Route path="categories/:categoryName" element={<Category />} />

@@ -12,6 +12,7 @@ function Dashboard() {
     { to: "/products", label: "Products" },
     { to: "/categories", label: "Categories" },
     { to: "/newProduct", label: "New Product" },
+    { to: "/lowStockProducts", label: "Low Stock Products" },
   ];
   const [isDark, setIsDark] = useDarkMode();
 
@@ -20,7 +21,6 @@ function Dashboard() {
   const activeNavItem = navItems.find((item) =>
     location.pathname.startsWith(item.to)
   );
-  console.log(activeNavItem);
   const currentTitle = activeNavItem?.label || "Dashboard";
 
   return (
