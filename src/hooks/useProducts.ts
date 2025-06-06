@@ -3,7 +3,7 @@ import { supabase } from "../lib/supabase";
 
 import type { Product } from "../types/product";
 
-import { NUMBER_PER_PAGE } from "../conts";
+import { NUMBER_PER_PAGE } from "../const";
 import { useDebounce } from "./useDebounce";
 
 export const useProducts = () => {
@@ -94,6 +94,23 @@ export const useProductCategories = () => {
 
       if (error) throw new Error(error.message);
       return data;
+    },
+  });
+};
+
+export const useProductCategoriesCount = () => {
+  return useQuery({
+    queryKey: ["categories-number"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("products")
+        .select("category")
+        .neq("category", null);
+
+      if (error) throw new Error(error.message);
+
+      const unique = [...new Set(data.map((item) => item.category))];
+      return unique.length ?? 0;
     },
   });
 };
