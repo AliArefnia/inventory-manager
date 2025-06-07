@@ -1,10 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../lib/supabase";
 
 import type { Product } from "../types/product";
 
 import { NUMBER_PER_PAGE } from "../const";
 import { useDebounce } from "./useDebounce";
+import { toast } from "react-toastify";
 
 export const useProducts = () => {
   return useQuery({
@@ -93,7 +94,8 @@ export const useProductCategories = () => {
         .select("category");
 
       if (error) throw new Error(error.message);
-      return data;
+      console.log(data);
+      return data as { category: string }[];
     },
   });
 };
@@ -111,6 +113,35 @@ export const useProductCategoriesCount = () => {
 
       const unique = [...new Set(data.map((item) => item.category))];
       return unique.length ?? 0;
+    },
+  });
+};
+
+export const useDeleteCategory = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (categoryName: string) => {
+      const { error } = await supabase
+        .from("products")
+        .delete()
+        .eq("category", categoryName);
+      if (error) throw new Error(error.message);
+    },
+    onSuccess: async () => {
+      toast.success("Product deleted successfully");
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ["products"],
+        }),
+        queryClient.invalidateQueries({ queryKey: ["products"] }),
+        queryClient.invalidateQueries({ queryKey: ["categories"] }),
+        queryClient.invalidateQueries({ queryKey: ["categories-number"] }),
+        queryClient.invalidateQueries({ queryKey: ["low-stock-products"] }),
+        queryClient.invalidateQueries({ queryKey: ["low-stock-count-only"] }),
+      ]);
+    },
+    onError: (error: Error) => {
+      toast.error(`Failed to delete product: ${error.message}`);
     },
   });
 };
