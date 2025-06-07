@@ -9,6 +9,11 @@ export type Product = {
   updated_at?: string;
 };
 
+export type Category = {
+  name: string;
+  numberOfProducts: number;
+};
+
 export type ProductFormValues = {
   name: string;
   sku: string;
