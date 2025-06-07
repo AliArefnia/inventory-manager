@@ -22,11 +22,17 @@ export const useUpdateProduct = () => {
 
       if (error) throw new Error(error.message);
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries({
-        queryKey: ["product", `${variables.productId}`],
-      });
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+    onSuccess: async (_data, variables) => {
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ["product", `${variables.productId}`],
+        }),
+        queryClient.invalidateQueries({ queryKey: ["products"] }),
+        queryClient.invalidateQueries({ queryKey: ["categories"] }),
+        queryClient.invalidateQueries({ queryKey: ["categories-number"] }),
+        queryClient.invalidateQueries({ queryKey: ["low-stock-products"] }),
+        queryClient.invalidateQueries({ queryKey: ["low-stock-count-only"] }),
+      ]);
     },
   });
 };

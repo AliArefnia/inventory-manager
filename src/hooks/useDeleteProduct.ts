@@ -14,9 +14,18 @@ export const useDeleteProduct = () => {
         .eq("id", productId);
       if (error) throw new Error(error.message);
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("Product deleted successfully");
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ["products"],
+        }),
+        queryClient.invalidateQueries({ queryKey: ["products"] }),
+        queryClient.invalidateQueries({ queryKey: ["categories"] }),
+        queryClient.invalidateQueries({ queryKey: ["categories-number"] }),
+        queryClient.invalidateQueries({ queryKey: ["low-stock-products"] }),
+        queryClient.invalidateQueries({ queryKey: ["low-stock-count-only"] }),
+      ]);
     },
     onError: (error: Error) => {
       toast.error(`Failed to delete product: ${error.message}`);

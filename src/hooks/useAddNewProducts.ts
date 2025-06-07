@@ -1,8 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../lib/supabase";
 import { type ProductFormValues } from "../types/product";
 
 export const useAddNewProduct = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (newProduct: ProductFormValues) => {
       const { error } = await supabase
@@ -19,6 +20,15 @@ export const useAddNewProduct = () => {
         }
         throw new Error(error.message);
       }
+    },
+    onSuccess: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["products"] }),
+        queryClient.invalidateQueries({ queryKey: ["categories"] }),
+        queryClient.invalidateQueries({ queryKey: ["categories-number"] }),
+        queryClient.invalidateQueries({ queryKey: ["low-stock-products"] }),
+        queryClient.invalidateQueries({ queryKey: ["low-stock-count"] }),
+      ]);
     },
   });
 };
