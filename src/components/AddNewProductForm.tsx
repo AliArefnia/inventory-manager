@@ -53,7 +53,7 @@ export default function NewProductFormPage() {
             SKU
           </label>
           <input
-            {...register("sku", { required: "SKU is required" })}
+            {...register("sku")}
             className="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-400 dark:bg-neutral-900 dark:border-neutral-700 dark:text-white"
           />
           {errors.sku && (
