@@ -1,6 +1,14 @@
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import {
+  LayoutDashboard,
+  PackageSearch,
+  LayoutList,
+  SquarePlus,
+  ArrowBigDownDash,
+  Menu,
+  X,
+} from "lucide-react";
 import useDarkMode from "../hooks/useDarkMode";
 import BaseButton from "../components/BaseButton";
 
@@ -8,11 +16,31 @@ function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const navItems = [
-    { to: "/dashboard", label: "Dashboard" },
-    { to: "/products", label: "Products" },
-    { to: "/categories", label: "Categories" },
-    { to: "/newProduct", label: "New Product" },
-    { to: "/lowStockProducts", label: "Low Stock Products" },
+    {
+      to: "/dashboard",
+      label: "Dashboard",
+      icon: <LayoutDashboard></LayoutDashboard>,
+    },
+    {
+      to: "/products",
+      label: "Products",
+      icon: <PackageSearch></PackageSearch>,
+    },
+    {
+      to: "/categories",
+      label: "Categories",
+      icon: <LayoutList></LayoutList>,
+    },
+    {
+      to: "/newProduct",
+      label: "New Product",
+      icon: <SquarePlus></SquarePlus>,
+    },
+    {
+      to: "/lowStockProducts",
+      label: "Low Stock",
+      icon: <ArrowBigDownDash></ArrowBigDownDash>,
+    },
   ];
   const [isDark, setIsDark] = useDarkMode();
 
@@ -36,7 +64,7 @@ function Dashboard() {
             Inventory App
           </h1>
           <nav className="space-y-2">
-            {navItems.map(({ to, label }) => (
+            {navItems.map(({ to, label, icon }) => (
               <NavLink
                 key={to}
                 to={to}
@@ -46,14 +74,14 @@ function Dashboard() {
                   }
                 }}
                 className={({ isActive }) =>
-                  `block px-4 py-2 text-center rounded-lg transition-colors  ${
+                  `flex  px-4 py-2  rounded-lg transition-colors  ${
                     isActive
                       ? "bg-gray-200 font-semibold dark:text-black"
                       : "text-gray-600 hover:bg-gray-100  dark:text-gray-200 dark:hover:text-gray-800"
                   }`
                 }
               >
-                {label}
+                <span className="mx-2">{icon}</span> <span>{label}</span>
               </NavLink>
             ))}
           </nav>
