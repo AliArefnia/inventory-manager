@@ -8,10 +8,12 @@ export const useDeleteProduct = () => {
 
   return useMutation({
     mutationFn: async (productId: string) => {
-      const { error } = await supabase
-        .from("products")
-        .delete()
-        .eq("id", productId);
+      const { error } = await supabase.rpc(
+        "delete_product_and_adjust_category_by_id",
+        {
+          p_id: productId,
+        }
+      );
       if (error) throw new Error(error.message);
     },
     onSuccess: async () => {
