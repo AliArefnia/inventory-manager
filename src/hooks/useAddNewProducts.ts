@@ -6,10 +6,14 @@ export const useAddNewProduct = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (newProduct: ProductFormValues) => {
-      const { error } = await supabase
-        .from("products")
-        .insert([newProduct])
-        .select();
+      const { error } = await supabase.rpc("insert_product_with_category", {
+        p_name: newProduct.name,
+        p_price: newProduct.price,
+        p_quantity: newProduct.quantity,
+        p_category: newProduct.category,
+        p_sku: newProduct.sku ?? null,
+      });
+
       if (error) {
         if (
           error.message.includes(
@@ -21,6 +25,7 @@ export const useAddNewProduct = () => {
         throw new Error(error.message);
       }
     },
+
     onSuccess: async () => {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ["products"] }),
