@@ -8,17 +8,17 @@ export const useUpdateProduct = () => {
     mutationFn: async (product: Product) => {
       const { productId, ...rest } = product;
 
-      const updateFields = {
-        ...rest,
-        price: Number(rest.price),
-        quantity: Number(rest.quantity),
-      };
-
-      const { error } = await supabase
-        .from("products")
-        .update(updateFields)
-        .eq("id", productId)
-        .select();
+      const { error } = await supabase.rpc(
+        "update_product_and_category_by_id",
+        {
+          p_id: productId,
+          p_name: rest.name,
+          p_price: Number(rest.price),
+          p_quantity: Number(rest.quantity),
+          p_category: rest.category,
+          p_sku: rest.sku ?? null,
+        }
+      );
 
       if (error) throw new Error(error.message);
     },
