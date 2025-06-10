@@ -186,3 +186,40 @@ export const usePaginatedProductCategory = (
     },
   });
 };
+
+export const usePaginatedProductCategories = (
+  page: number,
+  searchTerm: string
+) => {
+  const debouncedSearch = useDebounce(searchTerm);
+
+  return useQuery({
+    queryKey: ["categories", page, debouncedSearch],
+
+    queryFn: async () => {
+      const from = (page - 1) * NUMBER_PER_PAGE;
+      const to = from + NUMBER_PER_PAGE - 1;
+
+      let query = supabase
+        .from("categories")
+        .select("*", { count: "exact" })
+        .range(from, to);
+
+      if (debouncedSearch.length >= 2) {
+        query = query.or(`name.ilike.%${debouncedSearch}%`);
+      }
+
+      const { data, error, count } = await query;
+
+      if (error) throw new Error(error.message);
+
+      return {
+        data: data.map(({ name, number_of_products }) => ({
+          name: name,
+          numberOfProducts: number_of_products,
+        })),
+        count,
+      };
+    },
+  });
+};
