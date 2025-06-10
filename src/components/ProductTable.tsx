@@ -81,7 +81,7 @@ function ProductTable({
             <BaseButton
               className="dark:text-neutral-100"
               onClick={() => {
-                navigate(`${row.original.productId}`);
+                navigate(`/products/${row.original.productId}`);
               }}
             >
               View
