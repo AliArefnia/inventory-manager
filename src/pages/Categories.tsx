@@ -1,52 +1,45 @@
-import { useProductCategories } from "../hooks/useProducts";
-import BaseCategoryCard from "../components/BaseCategoryCard";
-import { useNavigate } from "react-router-dom";
-import LoadingSpinner from "../components/LoadingSpinner";
-import ErrorContainer from "../components/ErrorContainer";
+import { usePaginatedProductCategories } from "../hooks/useProducts";
+
+import CategoriesTable from "../components/CategoryTable";
+import { useState } from "react";
+import Pagination from "../components/Pagination";
+import { NUMBER_PER_PAGE } from "../const";
 
 function Categories() {
-  const { data, isLoading, isError, error, refetch } = useProductCategories();
-  const navigate = useNavigate();
-  const categoriesList =
-    data?.map((item) => item.category).filter(Boolean) ?? [];
-
-  const separatedCatList: { catName: string; number: number }[] = [];
-
-  categoriesList.forEach((cat: string) => {
-    const existing = separatedCatList.find((entry) => entry.catName === cat);
-
-    if (existing) {
-      existing.number += 1;
-    } else {
-      separatedCatList.push({ catName: cat, number: 1 });
-    }
-  });
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const {
+    data: { data: searchData, count } = { data: [], count: 0 },
+    isLoading,
+    isError,
+    error,
+  } = usePaginatedProductCategories(page, searchTerm);
 
   return (
-    <div className="flex justify-center">
-      {isLoading ? (
-        <LoadingSpinner>Getting Categories List ...</LoadingSpinner>
-      ) : isError ? (
-        <ErrorContainer className="w-1/2 ">
-          Failed to fetch Categories!
-        </ErrorContainer>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full px-8">
-          {separatedCatList.map((cat) => (
-            <BaseCategoryCard
-              onClick={() => {
-                navigate(`${cat.catName}`);
-              }}
-              catName={cat.catName}
-              catNumber={cat.number}
-              isLoading={isLoading}
-              isError={isError}
-              error={error}
-              onRetry={refetch}
-              key={cat.catName}
-            ></BaseCategoryCard>
-          ))}
-        </div>
+    <div>
+      <input
+        type="text"
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="w-1/2 px-4 py-2 mx-2 mt-3 mb-6 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 placeholder-neutral-400 dark:placeholder-neutral-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600 transition"
+      />
+
+      <CategoriesTable
+        key="allCategories"
+        categories={searchData!}
+        isLoading={isLoading}
+        isError={isError}
+        error={error}
+        count={count!}
+      ></CategoriesTable>
+      {!isLoading && !isError && count !== 0 && (
+        <Pagination
+          currentPage={page}
+          numberOfItems={NUMBER_PER_PAGE}
+          totalItems={count!}
+          changePage={setPage}
+        ></Pagination>
       )}
     </div>
   );
