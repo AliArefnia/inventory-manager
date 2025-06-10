@@ -121,11 +121,18 @@ export const useDeleteCategory = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (categoryName: string) => {
-      const { error } = await supabase
+      const { error: productError } = await supabase
         .from("products")
         .delete()
         .eq("category", categoryName);
-      if (error) throw new Error(error.message);
+      if (productError) throw new Error(productError.message);
+
+      const { error: categoryError } = await supabase
+        .from("categories")
+        .delete()
+        .eq("name", categoryName);
+
+      if (categoryError) throw new Error(categoryError.message);
     },
     onSuccess: async () => {
       toast.success("Product deleted successfully");
