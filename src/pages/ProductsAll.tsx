@@ -38,7 +38,7 @@ export default function Products() {
         error={error}
       ></ProductTable>
 
-      {!isLoading && !isError && (
+      {!isLoading && !isError && count !== 0 && (
         <Pagination
           currentPage={page}
           numberOfItems={NUMBER_PER_PAGE}
