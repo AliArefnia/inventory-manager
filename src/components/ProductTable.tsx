@@ -11,9 +11,9 @@ import { useNavigate } from "react-router-dom";
 
 import { type Product } from "../types/product";
 
-import LoadingSpinner from "./loadingSpinner_temp";
+import LoadingSpinner from "./LoadingSpinner";
 import ErrorContainer from "./ErrorContainer";
-import BaseButton from "./baseButton_temp";
+import BaseButton from "./BaseButton";
 import BaseYesNoModule from "./BaseYesNoModule";
 import { useDeleteProduct } from "../hooks/useDeleteProduct";
 

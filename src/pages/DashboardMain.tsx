@@ -10,7 +10,7 @@ import {
   X,
 } from "lucide-react";
 import useDarkMode from "../hooks/useDarkMode";
-import BaseButton from "../components/baseButton_temp";
+import BaseButton from "../components/BaseButton";
 
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);

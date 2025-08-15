@@ -2,7 +2,7 @@ import { usePaginatedProductCategories } from "../hooks/useProducts";
 
 import CategoriesTable from "../components/CategoryTable";
 import { useState } from "react";
-import Pagination from "../components/pagination_temp";
+import Pagination from "../components/Pagination";
 import { NUMBER_PER_PAGE } from "../const";
 
 function Categories() {

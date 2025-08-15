@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { usePaginatedProductCategory } from "../hooks/useProducts";
 
 import ProductTable from "../components/ProductTable";
-import Pagination from "../components/pagination_temp";
+import Pagination from "../components/Pagination";
 
 import { NUMBER_PER_PAGE } from "../const";
 

@@ -1,4 +1,4 @@
-import LoadingSpinner from "./loadingSpinner_temp";
+import LoadingSpinner from "./LoadingSpinner";
 
 function FetchCard({
   title,

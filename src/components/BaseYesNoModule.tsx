@@ -1,4 +1,4 @@
-import BaseButton from "./baseButton_temp";
+import BaseButton from "./BaseButton";
 import BaseModal from "./BaseModal";
 type YesNoModalProps = {
   isOpen: boolean;

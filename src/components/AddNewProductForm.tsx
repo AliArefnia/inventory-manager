@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useAddNewProduct } from "../hooks/useAddNewProducts";
 import { type ProductFormValues } from "../types/product";
-import BaseButton from "./baseButton_temp";
+import BaseButton from "./BaseButton";
 
 export default function NewProductFormPage() {
   const {

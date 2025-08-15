@@ -7,8 +7,8 @@ import { useUpdateProduct } from "../hooks/useUpdateProduct";
 
 import Modal from "../components/BaseModal";
 import EditProductForm from "../components/EditProductForm";
-import LoadingSpinner from "../components/loadingSpinner_temp";
-import BaseButton from "../components/baseButton_temp";
+import LoadingSpinner from "../components/LoadingSpinner";
+import BaseButton from "../components/BaseButton";
 
 import { useDeleteProduct } from "../hooks/useDeleteProduct";
 import BaseYesNoModule from "../components/BaseYesNoModule";
