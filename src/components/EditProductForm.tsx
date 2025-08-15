@@ -1,8 +1,8 @@
 // components/EditProductForm.tsx
 import { useForm } from "react-hook-form";
 import { type Product } from "../types/product";
-import LoadingSpinner from "./LoadingSpinner";
-import BaseButton from "./BaseButton";
+import LoadingSpinner from "./loadingSpinner_temp";
+import BaseButton from "./baseButton_temp";
 
 type EditProductFormProps = {
   product: Product;

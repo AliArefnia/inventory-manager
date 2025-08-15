@@ -2,7 +2,7 @@ import { usePaginatedProducts } from "../hooks/useProducts";
 
 import { NUMBER_PER_PAGE } from "../const";
 
-import Pagination from "../components/Pagination";
+import Pagination from "../components/pagination_temp";
 import { useState } from "react";
 import ProductTable from "../components/ProductTable";
 

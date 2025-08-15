@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Pagination from "../components/Pagination";
+import Pagination from "../components/pagination_temp";
 import ProductTable from "../components/ProductTable";
 import { usePaginatedLowStockProducts } from "../hooks/useLowProduct";
 

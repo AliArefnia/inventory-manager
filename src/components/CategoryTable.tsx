@@ -11,9 +11,9 @@ import { useNavigate } from "react-router-dom";
 
 import { type Category } from "../types/product";
 
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "./loadingSpinner_temp";
 import ErrorContainer from "./ErrorContainer";
-import BaseButton from "./BaseButton";
+import BaseButton from "./baseButton_temp";
 import BaseYesNoModule from "./BaseYesNoModule";
 import { useDeleteCategory } from "../hooks/useProducts";
 

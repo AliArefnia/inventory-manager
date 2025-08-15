@@ -1,4 +1,4 @@
-import BaseButton from "./BaseButton";
+import BaseButton from "./baseButton_temp";
 
 type PaginationProps = {
   currentPage: number;
